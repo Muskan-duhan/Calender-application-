@@ -1,0 +1,58 @@
+#include <iostream>
+using namespace std;
+
+bool isLeapYear(int year) {
+    if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+int getNumOfDays(int month, int year) {
+    if (month == 2) {
+        if (isLeapYear(year)) {
+            return 29;
+        } else {
+            return 28;
+        }
+    } else if (month == 4 || month == 6 || month == 9 || month == 11) {
+        return 30;
+    } else {
+        return 31;
+    }
+}
+
+void displayCalendar(int month, int year) {
+    cout << "---------------------------" << endl;
+    cout << "      Calendar " << month << "/" << year << endl;
+    cout << "---------------------------" << endl;
+    cout << " Sun Mon Tue Wed Thu Fri Sat" << endl;
+
+    int startingDay = (year * 365 + (year - 1) / 4 - (year - 1) / 100 + (year - 1) / 400 + (13 * month + 8) / 5) % 7;
+
+    for (int i = 0; i < startingDay; i++) {
+        cout << "    ";
+    }
+
+    int numOfDays = getNumOfDays(month, year);
+    for (int day = 1; day <= numOfDays; day++) {
+        printf("%4d", day);
+        startingDay++;
+        if (startingDay % 7 == 0) {
+            cout << endl;
+        }
+    }
+
+    cout << endl << "---------------------------" << endl;
+}
+
+int main() {
+    
+    int month = 4; // April
+    int year = 2024;
+
+    displayCalendar(month, year);
+
+    return 0;
+}
